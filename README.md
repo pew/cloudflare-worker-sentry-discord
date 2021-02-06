@@ -1,21 +1,13 @@
 # sentry-discord
 
-This is a basic Zeit Now Function that accepts an incoming [Sentry](https://sentry.io) webhook and transforms it to the format expected by [Discord](https://discordapp.com/).
+Cloudflare worker function to send [sentry.io](https://sentry.io) alerts to [Discord](https://discord.com).
 
-## Deploy
+## Deployment
 
-#### Create Discord Webhook and add to Secrets
+1. [create a new Cloudflare worker](https://workers.cloudflare.com)
+2. copy and paste the contents of `index.js` into the *quick edit* editor, **save and deploy**
+3. open the Cloudflare Workers *settings* page and add a new **Environment Variable**
 
-Step one is to create a new Discord Webhook to send the alerts to and add the domain to now secrets
+Use `WEBHOOK` for the `VARIABLE_NAME` and the generated Discord webhook URL for the `Value`
 
-```
-now secrets add sentry-discord-webhook <WEBHOOK_URL>
-```
-
-#### Deploy!
-
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/ianmitchell/sentry-discord/tree/master)
-
-#### Add Webhook to Sentry
-
-Take the deployment URL and add it to the `Webhooks` section of your Sentry project. **You will need to add a `/api` to the domain.** The root URL will not work. Save the value and click "Test Plugin" - you should see an alert pop up in Discord!
+4. now configure sentry to send events to your workers script, for example: `https://super-worker.awesomesauce.workers.dev/`
